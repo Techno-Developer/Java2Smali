@@ -7,6 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="dx" level="project" />
+    <orderEntry type="library" name="baksmali" level="project" />
   </component>
 </module>
-
