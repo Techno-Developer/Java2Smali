@@ -57,6 +57,9 @@ public class Main {
         File smaliFile = new File("out/".concat(smaliFileName));
 
         try {
+            if (new File(smaliFileName).exists()) {
+                new File(smaliFileName).delete();
+            }
             Files.move(Paths.get(smaliFile.toURI()), Paths.get(smaliFileName));
         } catch (IOException e) {
             print("Error during extraction");
