@@ -57,12 +57,14 @@ public class Main {
         File smaliFile = new File("out/".concat(smaliFileName));
 
         try {
-            if (new File(smaliFileName).exists()) {
-                new File(smaliFileName).delete();
+            File oldSmaliFile = new File(smaliFileName);
+            if (oldSmaliFile.exists()) {
+                print("Deleting duplicate...");
+                deleteFile(oldSmaliFile);
             }
             Files.move(Paths.get(smaliFile.toURI()), Paths.get(smaliFileName));
         } catch (IOException e) {
-            print("Error during extraction");
+            print("Error during extraction.");
             System.exit(1);
         }
 
@@ -73,8 +75,12 @@ public class Main {
     }
 
     private static void deleteFile(String fileName) {
-        if (!new File(fileName).delete()) {
-            print("Cannot delete ".concat(fileName));
+        deleteFile(new File(fileName));
+    }
+
+    private static void deleteFile(File file) {
+        if (!file.delete()) {
+            print("Cannot delete ".concat(file.getName()).concat("."));
         }
     }
 
