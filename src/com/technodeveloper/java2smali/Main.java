@@ -42,33 +42,33 @@ public class Main {
         javaClassFileName = javaFileName.replace(JAVA_EXT, CLASS_EXT);
         dexFileName = "classes.dex";
 
-        print("Compiling...");
+        print("[I] Compiling...");
         ToolsManager.runJavac(javaFileName);
 
-        print("Dexing...");
+        print("[I] Dexing...");
         ToolsManager.runDx(new String[]{"--dex", "--output", dexFileName, javaClassFileName});
 
-        print("Running baksmali...");
+        print("[I] Running baksmali...");
         ToolsManager.runBaksmali(new String[]{"d", dexFileName});
     }
 
     private void extractAndClean() {
-        print("Copying smali source...");
+        print("[I] Copying smali source...");
         File smaliFile = new File("out/".concat(smaliFileName));
 
         try {
             File oldSmaliFile = new File(smaliFileName);
             if (oldSmaliFile.exists()) {
-                print("Deleting duplicate...");
+                print("[I] Deleting duplicate...");
                 deleteFile(oldSmaliFile);
             }
             Files.move(Paths.get(smaliFile.toURI()), Paths.get(smaliFileName));
         } catch (IOException e) {
-            print("Error during extraction.");
+            print("[E] Error during extraction.");
             System.exit(1);
         }
 
-        print("Deleting junk files...");
+        print("[I] Deleting junk files...");
         deleteFile("out");
         deleteFile(javaClassFileName);
         deleteFile(dexFileName);
@@ -80,7 +80,7 @@ public class Main {
 
     private static void deleteFile(File file) {
         if (!file.delete()) {
-            print("Cannot delete ".concat(file.getName()).concat("."));
+            print("[E] Cannot delete ".concat(file.getName()).concat("."));
         }
     }
 
