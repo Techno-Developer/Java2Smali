@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 
 public class Main {
     private static final String HELP_MESSAGE = "Usage:\n\tJava2Smali <JavaSourceFile>";
-    private static final String NOFILE_ERROR = "$FILE$ does not exist.";
+    private static final String NOFILE_ERROR = "[E] $FILE$ does not exist.";
     private static final String JAVA_EXT = ".java";
     private static final String CLASS_EXT = ".class";
     private static final String SMALI_EXT = ".smali";
@@ -30,6 +30,7 @@ public class Main {
             if (new File(args[0]).exists()) {
                 convert(args[0]);
                 extractAndClean();
+                print("[I] Done.");
             } else {
                 print(NOFILE_ERROR.replace("$FILE$", args[0]));
             }
@@ -43,7 +44,13 @@ public class Main {
         dexFileName = "classes.dex";
 
         print("[I] Compiling...");
-        ToolsManager.runJavac(javaFileName);
+        String errors = ToolsManager.runJavac(javaFileName);
+        if (errors.contains("error")) {
+            print("[E] Error during the compilation of ".concat(javaFileName).concat("\n").concat(errors));
+            print("[E] Compilation failed, check errors above for more info.");
+            System.exit(1);
+        }
+        print("[I] Compiled successfully.");
 
         print("[I] Dexing...");
         ToolsManager.runDx(new String[]{"--dex", "--output", dexFileName, javaClassFileName});

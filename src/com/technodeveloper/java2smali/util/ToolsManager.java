@@ -2,11 +2,28 @@ package com.technodeveloper.java2smali.util;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
+import java.io.OutputStream;
 
 public class ToolsManager {
-    public static void runJavac(String sourceFile) {
+    public static String runJavac(String sourceFile) {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        compiler.run(null, null, null, "-source", "1.8", "-target", "1.8", sourceFile);
+
+        OutputStream errors = new OutputStream() {
+            private StringBuilder sb = new StringBuilder();
+
+            @Override
+            public void write(int b) {
+                this.sb.append((char) b);
+            }
+
+            @Override
+            public String toString() {
+                return this.sb.toString();
+            }
+        };
+
+        compiler.run(null, null, errors, "-source", "1.8", "-target", "1.8", sourceFile);
+        return errors.toString();
     }
 
     public static void runDx(String[] args) {
