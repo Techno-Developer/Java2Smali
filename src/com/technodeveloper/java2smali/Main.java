@@ -19,7 +19,6 @@ public class Main {
     private static final String CLASS_EXT = ".class";
     private static final String SMALI_EXT = ".smali";
 
-    private String javaFileName;
     private String javaClassFileName;
     private String smaliFileName;
     private String dexFileName;
@@ -52,15 +51,14 @@ public class Main {
     }
 
     private void convert(String fileName) {
-        javaFileName = fileName;
-        smaliFileName = javaFileName.replace(JAVA_EXT, SMALI_EXT);
-        javaClassFileName = javaFileName.replace(JAVA_EXT, CLASS_EXT);
+        smaliFileName = fileName.replace(JAVA_EXT, SMALI_EXT);
+        javaClassFileName = fileName.replace(JAVA_EXT, CLASS_EXT);
         dexFileName = "classes.dex";
 
         print("[I] Compiling...");
-        String errors = ToolsManager.runJavac(javaFileName);
+        String errors = ToolsManager.runJavac(fileName);
         if (errors.contains("error")) {
-            print("[E] Error during the compilation of ".concat(javaFileName).concat("\n").concat(errors));
+            print("[E] Error during the compilation of ".concat(fileName).concat("\n").concat(errors));
             print("[E] Compilation failed, check errors above for more info.");
             System.exit(1);
         }

@@ -9,7 +9,7 @@ public class ToolsManager {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
         OutputStream errors = new OutputStream() {
-            private StringBuilder sb = new StringBuilder();
+            private final StringBuilder sb = new StringBuilder();
 
             @Override
             public void write(int b) {
