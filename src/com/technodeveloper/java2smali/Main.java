@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Main {
-    private static final String VERSION = "1.2";
+    private static final String VERSION = "1.2.1";
 
     private static final String HELP_MESSAGE = "Usage:" +
             "\n\tJava2Smali <JavaSourceFile>" +
@@ -103,7 +103,7 @@ public class Main {
         }
     }
 
-    private static void print(String s) {
+    public static void print(String s) {
         System.out.println(s);
     }
 }
