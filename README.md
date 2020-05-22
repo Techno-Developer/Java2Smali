@@ -1,6 +1,6 @@
 # Java2Smali
 This tool converts java code to [smali](https://github.com/JesusFreke/smali) (Dalvik bytecode)
-If this tool was useful to you, please leave a ⭐ :)
+<br>If this tool was useful to you, please leave a ⭐ :)
 
 ## Getting started
 
